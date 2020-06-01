@@ -11,7 +11,24 @@
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
-#
+require 'capybara/rspec'
+require 'simplecov'
+require 'simplecov-console'
+require File.join(File.dirname(__FILE__), '..', 'app.rb')
+require 'capybara'
+require 'rspec'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::Console,
+  # Want a nice code coverage website? Uncomment this next line!
+  # SimpleCov::Formatter::HTMLFormatter
+])
+SimpleCov.start
+
+ENV['RACK_ENV'] = 'test'
+
+Capybara.app = Bookmark
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
